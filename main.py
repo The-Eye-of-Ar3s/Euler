@@ -5,9 +5,57 @@ import time
 
 def colorize(text, color):
     if color == "red":
-        return f"\33[31m{text} μs\33[0m"
+        return f"\33[31mNA μs\33[0m"
     else:
         return f"\33[32m{text} μs\33[0m"
+
+def generate_report(headers, data):
+
+    with open("report.md", "wb") as f:
+        report = generate_markdown_report(headers, data)
+        f.write(report.encode("utf8"))
+    
+def generate_markdown_report(headers, data):
+    report1 = "<h1 align=\"center\">Implementation Table</h1>\n\n|"
+
+
+    for head in [headers[0]] + headers[2:]:
+        report1 += f"{head}|"
+    report1 += "\n|"
+    for _ in [headers[0]] + headers[2:]:
+        report1 += f":-:|"
+    report1 += "\n|"
+    for row in data:
+        for elmt in [f"-{row[0]}"] + row[2:]:
+            if elmt == "NO ANSWER":
+                report1 += " :x: |"
+            elif elmt[0] == "-":
+                report1 += f"{elmt[1:]}|"
+            else:
+                report1 += f" :heavy_check_mark: |"
+        report1 += "\n|"
+    report1 = report1[:-2]
+
+
+    report = "<h1 align=\"center\">Time Table</h1>\n\n|"
+    for head in headers:
+        report += f"{head}|"
+    report += "\n|"
+    for _ in headers:
+        report += ":-:|"
+    report += "\n|"
+    for row in data:
+        for elmt in row:
+            if elmt != "NO ANSWER":
+                report += f"{elmt}|"
+            else:
+                report  += "NO IMP|"
+        report += "\n|"
+    report = report[:-2]
+
+
+    r = report1 + "\n\n" + report
+    return r
 
 
 def time_lang(setup, command):
@@ -58,11 +106,15 @@ def measure(problem):
     elif problem == "*" or problem.lower() == "all":
         for i in a.keys():
             data.append(clc(s_map, a, i))
+    elif problem.lower() == "r" or problem.lower() == "report":
+        for i in a.keys():
+            data.append(clc(s_map, a, i, False))
+    generate_report(headers, data)
     print("\n"*1)
     print(tabulate(data, headers, tablefmt="psql"))
     print("\n"*1)
 
-def clc(s_map, b, prob):
+def clc(s_map, b, prob, cl:bool = True):
     print(f"COMPILING & CALCULATING PROBLEM: {prob}")
     c_map = {
         "Python": f"python .\\python\\main.py {prob}",
@@ -88,10 +140,17 @@ def clc(s_map, b, prob):
             if float(times[i]) < m:
                 si = i
                 m = float(times[i])
-            times[i] = colorize(times[i], "green")
+            if cl:
+                times[i] = colorize(times[i], "green")
+            else:
+                times[i] = f"{times[i]}  μs"
         else:
-            times[i] = colorize(times[i], "red")
-    times[si] = "\33[1m"+times[si]
+            if cl:
+                times[i] = colorize(times[i], "red")
+            else:
+                times[i] = "NO ANSWER"
+    if cl:
+        times[si] = "\33[1m"+times[si]
     return [prob, b[prob]] + times
 
 try:
