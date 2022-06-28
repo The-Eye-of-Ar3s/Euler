@@ -20,6 +20,24 @@ std::vector<int> prime_factorize(long long int n) {
     return r;
 }
 
+void reverseStr(string& str)
+{
+    int n = str.length();
+    for (int i = 0; i < n / 2; i++)
+        swap(str[i], str[n - i - 1]);
+}
+
+int is_palindrome(int n) {
+    std::string s = std::to_string(n);
+    std::string rs = s;
+    reverseStr(rs);
+    if (s == rs) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 int solve001() {
     int s = 0;
     for (int i = 1; i < 1000; i++) {
@@ -53,6 +71,20 @@ int solve003() {
     return pf[s];
 }
 
+int solve004() {
+    int m = 0;
+    int ml;
+    for (int i = 999; i > 100; i--) {
+        for (int j = i; j > 100; j--) {
+            ml = i*j;
+            if (is_palindrome(ml) && ml>m) {
+                m = ml;
+            }
+        }
+    }
+    return m;
+}
+
 int main(int argc, char** argv) {
     switch(stoi(argv[1])) {
         case 1:
@@ -63,6 +95,9 @@ int main(int argc, char** argv) {
             break;
         case 3:
             std::cout<<solve003()<<"\n";
+            break;
+        case 4:
+            std::cout<<solve004()<<"\n";
             break;
         default:
             std::cout<<"NA\n";

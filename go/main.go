@@ -3,7 +3,16 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
+
+func reverse(s string) string {
+	runes := []rune(s)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
+}
 
 func prime_factorize(n int) []int {
 	var r []int
@@ -18,6 +27,12 @@ func prime_factorize(n int) []int {
 	}
 	r = append(r, n)
 	return r
+}
+
+func is_palindrome(n int) bool {
+	s := strconv.Itoa(n)
+	r := reverse(s)
+	return s == r
 }
 
 func solve001() int {
@@ -52,6 +67,20 @@ func solve003() int {
 	return pf[len(pf)-1]
 }
 
+func solve004() int {
+	m := 0
+	ml := 0
+	for i := 999; i > 100; i -= 1 {
+		for j := i; j > 100; j -= 1 {
+			ml = i * j
+			if is_palindrome(ml) && ml > m {
+				m = ml
+			}
+		}
+	}
+	return m
+}
+
 func main() {
 	arg := os.Args[1]
 	switch arg {
@@ -61,6 +90,8 @@ func main() {
 		fmt.Println(solve002())
 	case "3":
 		fmt.Println(solve003())
+	case "4":
+		fmt.Println(solve004())
 	default:
 		fmt.Println("NA")
 	}

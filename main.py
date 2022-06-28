@@ -1,6 +1,6 @@
 import sys
 from tabulate import tabulate
-import os
+import os, subprocess
 import time
 
 def colorize(text, color):
@@ -11,7 +11,8 @@ def colorize(text, color):
 
 
 def time_lang(setup, command):
-    s = os.system(setup)
+    if setup != "":
+        subprocess.run(setup, capture_output=True)
     t_start = time.perf_counter()
     a = os.popen(command).read()
     t_stop = time.perf_counter()

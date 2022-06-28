@@ -13,6 +13,11 @@ def prime_factorize(n)
     return r
 end
 
+def is_palindrome(n)
+    s = n.to_s
+    return s == s.reverse
+end
+
 def solve001
     return (1...1000).to_a.map{ |i| if i%3 == 0 or i % 5 == 0 then i else 0 end}.sum
 end
@@ -32,6 +37,19 @@ def solve003
     return prime_factorize(600851475143)[-1]
 end
 
+def solve004
+    m = 0
+    for i in (999).downto(100) do
+        for j in (i).downto(100) do
+            ml = i*j
+            if is_palindrome(ml) and ml > m then
+                m = ml
+            end
+        end
+    end
+    return m
+end
+
 def main
     case ARGV[0]
     when "1"
@@ -40,6 +58,8 @@ def main
         puts solve002
     when "3"
         puts solve003
+    when "4"
+        puts solve004
     else
         puts "NA"
     end

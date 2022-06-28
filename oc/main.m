@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 int largest_prime_factor(long long int n) {
     int p = 2;
@@ -11,6 +13,22 @@ int largest_prime_factor(long long int n) {
         }
     }
     return n;
+}
+
+int is_palindromic(long num)
+{
+    long reverse=0,c_num;
+    c_num=num;
+    while(num)
+    {
+        reverse=(reverse*10)+(num%10);
+        num/=10;
+    }
+
+    if(reverse==c_num) {
+        return 1;
+    }
+    return 0;
 }
 
 int solve001() {
@@ -46,6 +64,19 @@ int solve003() {
     return largest_prime_factor(600851475143);
 }
 
+int solve004() {
+    unsigned int i, j, max = 0;
+    for (i = 100; i <= 999; i++) {
+        for (j = 100; j <= 999; j++) {
+            unsigned int p = i*j;
+            if (is_palindromic(p) && p > max) {
+            max = p;
+            }
+        }
+    }
+    return max;
+}
+
 int main(int argc, char** argv) {
     switch(atoi(argv[1])) {
         case 1:
@@ -56,6 +87,9 @@ int main(int argc, char** argv) {
             break;
         case 3:
             printf("%d\n", solve003());
+            break;
+        case 4:
+            printf("%d\n", solve004());
             break;
         default:
             printf("NA\n");

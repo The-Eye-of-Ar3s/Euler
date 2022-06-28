@@ -13,6 +13,10 @@ function prime_factorize(n) {
     return r;
 }
 
+function is_palindrome(n) {
+    return n.toString() == n.toString().split("").reverse().join("");
+}
+
 function solve001() {
     let s = 0;
     for (let i = 1; i < 1000; i++) {
@@ -45,11 +49,26 @@ function solve003() {
     return pf[pf.length-1]
 }
 
+function solve004() {
+    let m = 0;
+    let ml = 0;
+    for (let i = 999; i > 100; i-=1) {
+        for (let j = i; j > 100; j-=1) {
+            ml = i*j;
+            if (is_palindrome(ml) && ml > m) {
+                m = ml;
+            }
+        }
+    }
+    return m;
+}
+
 function main(arg) {
     map = {
         "1": solve001,
         "2": solve002,
         "3": solve003,
+        "4": solve004,
     }
 
     if (arg in map) {
