@@ -9,6 +9,7 @@ def colorize(text, color):
     else:
         return f"\33[32m{text} μs\33[0m"
 
+
 def time_lang(setup, command):
     s = os.system(setup)
     t_start = time.perf_counter()
@@ -19,7 +20,6 @@ def time_lang(setup, command):
 
 
 def measure(problem):
-    headers = ["Problem"]
     s_map = {
         "Python": "",
         "JavaScript": "",
@@ -28,7 +28,7 @@ def measure(problem):
         "Ruby": "",
         "Objective-C": "clang -x objective-c .\\oc\\main.m -o .\\oc\\out.exe",
         "Go": "go build -o .\\go\\out.exe .\\go\\main.go",
-    }
+        }
     c_map = {
         "Python": f"python .\\python\\main.py {sys.argv[1]}",
         "JavaScript": f"node .\\javascript\\main {sys.argv[1]}",
@@ -37,6 +37,40 @@ def measure(problem):
         "Ruby": f"ruby .\\ruby\\main.rb {sys.argv[1]}",
         "Objective-C": f".\\oc\\out.exe {sys.argv[1]}",
         "Go": f".\\go\\out.exe {sys.argv[1]}",
+        }
+    a = {
+        "1": "233168",
+        "2": "4613732",
+        "3": "6857",
+        "4": "906609",
+        "5": "232792560",
+        "6": "25164150",
+        "7": "104743",
+        "8": "23514624000",
+        #"13": "5537376230",
+        #"16": "1366",
+        }
+    headers = ["Problem", "Answer"] + list(c_map.keys())
+    data = []
+    if problem in a.keys():
+        data.append(clc(s_map, a, problem))
+    elif problem == "*" or problem.lower() == "all":
+        for i in a.keys():
+            data.append(clc(s_map, a, i))
+    print("\n"*1)
+    print(tabulate(data, headers, tablefmt="psql"))
+    print("\n"*1)
+
+def clc(s_map, b, prob):
+    print(f"COMPILING & CALCULATING PROBLEM: {prob}")
+    c_map = {
+        "Python": f"python .\\python\\main.py {prob}",
+        "JavaScript": f"node .\\javascript\\main {prob}",
+        "C++": f".\\cpp\\out.exe {prob}",
+        "C": f".\\c\\out.exe {prob}",
+        "Ruby": f"ruby .\\ruby\\main.rb {prob}",
+        "Objective-C": f".\\oc\\out.exe {prob}",
+        "Go": f".\\go\\out.exe {prob}",
         }
     times = []
     langs = []
@@ -48,16 +82,8 @@ def measure(problem):
         answers.append(a[0])
     m = 2**1000
     si = 0
-    a = {
-        "1": "233168",
-        "2": "4613732",
-        "3": "6857",
-        "5": "232792560",
-        "6": "25164150",
-        "16": "1366"
-    }
     for i in range(len(times)):
-        if answers[i] == a[str(problem)]:
+        if answers[i] == b[prob]:
             if float(times[i]) < m:
                 si = i
                 m = float(times[i])
@@ -65,9 +91,7 @@ def measure(problem):
         else:
             times[i] = colorize(times[i], "red")
     times[si] = "\33[1m"+times[si]
-    print("\n"*1)
-    print(tabulate([[problem]+times], headers+langs, tablefmt="psql"))
-    print("\n"*1)
+    return [prob, b[prob]] + times
 
 try:
     measure(sys.argv[1])
