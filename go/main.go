@@ -5,6 +5,21 @@ import (
 	"os"
 )
 
+func prime_factorize(n int) []int {
+	var r []int
+	p := 2
+	for n >= p*p {
+		if n%p == 0 {
+			r = append(r, p)
+			n /= p
+		} else {
+			p += 1
+		}
+	}
+	r = append(r, n)
+	return r
+}
+
 func solve001() int {
 	s := 0
 	for i := 1; i < 1000; i++ {
@@ -32,6 +47,11 @@ func solve002() int {
 	return s
 }
 
+func solve003() int {
+	pf := prime_factorize(600851475143)
+	return pf[len(pf)-1]
+}
+
 func main() {
 	arg := os.Args[1]
 	switch arg {
@@ -39,6 +59,8 @@ func main() {
 		fmt.Println(solve001())
 	case "2":
 		fmt.Println(solve002())
+	case "3":
+		fmt.Println(solve003())
 	default:
 		fmt.Println("NA")
 	}

@@ -4,7 +4,7 @@ import sys
 def prime_factorize(n):
     r = []
     p = 2
-    while n >= p**2:
+    while n >= p*p:
         if n%p == 0:
             r.append(p)
             n//=p

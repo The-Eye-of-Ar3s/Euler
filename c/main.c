@@ -1,6 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int largest_prime_factor(long long int n) {
+    int p = 2;
+    while (n >= p*p) {
+        if (n%p == 0) {
+            n /= p;
+        } else {
+            p++;
+        }
+    }
+    return n;
+}
+
 int solve001() {
     int s = 0;
     for (int i = 1; i < 1000; i++) {
@@ -30,6 +42,10 @@ int solve002() {
     return s;
 }
 
+int solve003() {
+    return largest_prime_factor(600851475143);
+}
+
 int main(int argc, char** argv) {
     switch(atoi(argv[1])) {
         case 1:
@@ -37,6 +53,9 @@ int main(int argc, char** argv) {
             break;
         case 2:
             printf("%d\n", solve002());
+            break;
+        case 3:
+            printf("%d\n", solve003());
             break;
         default:
             printf("NA\n");
