@@ -1,4 +1,3 @@
-from re import I
 import sys
 
 def prime_factorize(n):
@@ -27,6 +26,9 @@ def is_prime(n):
 def is_palindrome(n):
     i = str(n).strip()
     return i == i[::-1]
+
+def primes_under(n):
+    pass
 
 def solve001():
     return sum([i for i in range(1000) if i % 3 == 0 or i % 5 == 0])
