@@ -26,6 +26,7 @@ def measure(problem):
         "C++": "clang++ .\\cpp\\main.cpp -o .\\cpp\\out.exe",
         "C": "clang .\\c\\main.c -o .\\c\\out.exe",
         "Ruby": "",
+        "Objective-C": "clang -x objective-c .\\oc\\main.m -o .\\oc\\out.exe",
     }
     c_map = {
         "Python": f"python .\\python\\main.py {sys.argv[1]}",
@@ -33,6 +34,7 @@ def measure(problem):
         "C++": f".\\cpp\\out.exe {sys.argv[1]}",
         "C": f".\\c\\out.exe {sys.argv[1]}",
         "Ruby": f"ruby .\\ruby\\main.rb {sys.argv[1]}",
+        "Objective-C": f".\\oc\\out.exe {sys.argv[1]}",
         }
     times = []
     langs = []
@@ -54,7 +56,6 @@ def measure(problem):
     }
     for i in range(len(times)):
         if answers[i] == a[str(problem)]:
-            print(langs[i], answers[i], a[str(problem)])
             if float(times[i]) < m:
                 si = i
                 m = float(times[i])
