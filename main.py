@@ -27,6 +27,7 @@ def measure(problem):
         "C": "clang .\\c\\main.c -o .\\c\\out.exe",
         "Ruby": "",
         "Objective-C": "clang -x objective-c .\\oc\\main.m -o .\\oc\\out.exe",
+        "Go": "go build -o .\\go\\out.exe .\\go\\main.go",
     }
     c_map = {
         "Python": f"python .\\python\\main.py {sys.argv[1]}",
@@ -35,6 +36,7 @@ def measure(problem):
         "C": f".\\c\\out.exe {sys.argv[1]}",
         "Ruby": f"ruby .\\ruby\\main.rb {sys.argv[1]}",
         "Objective-C": f".\\oc\\out.exe {sys.argv[1]}",
+        "Go": f".\\go\\out.exe {sys.argv[1]}",
         }
     times = []
     langs = []
