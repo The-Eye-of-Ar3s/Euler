@@ -1,2 +1,4 @@
 *.exe
 report.md
+target
+Cargo.lock
