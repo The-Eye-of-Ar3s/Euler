@@ -35,6 +35,20 @@ func is_palindrome(n int) bool {
 	return s == r
 }
 
+func is_prime(n int) bool {
+	if n == 1 {
+		return false
+	}
+	i := 2
+	for i*i <= n {
+		if n%i == 0 {
+			return false
+		}
+		i += 1
+	}
+	return true
+}
+
 func solve001() int {
 	s := 0
 	for i := 1; i < 1000; i++ {
@@ -81,6 +95,30 @@ func solve004() int {
 	return m
 }
 
+func solve006() int {
+	n1 := 0
+	n2 := 0
+	for i := 1; i <= 100; i += 1 {
+		n1 += i * i
+		n2 += i
+	}
+	n2 *= n2
+	return n2 - n1
+}
+
+func solve007() int {
+	var p []int
+	i := 3
+	p = append(p, 2)
+	for len(p) != 10001 {
+		if is_prime(i) {
+			p = append(p, i)
+		}
+		i += 2
+	}
+	return p[10000]
+}
+
 func main() {
 	arg := os.Args[1]
 	switch arg {
@@ -92,6 +130,10 @@ func main() {
 		fmt.Println(solve003())
 	case "4":
 		fmt.Println(solve004())
+	case "6":
+		fmt.Println(solve006())
+	case "7":
+		fmt.Println(solve007())
 	default:
 		fmt.Println("NA")
 	}

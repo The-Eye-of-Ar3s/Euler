@@ -38,6 +38,21 @@ int is_palindrome(int n) {
     }
 }
 
+int is_prime(int n) {
+    if (n == 1) {
+        return false;
+    }
+    
+    int i = 2;
+    while (i*i <= n) {
+        if (n%i == 0) {
+            return false;
+        }
+        i += 1;
+    }
+    return true;
+}
+
 int solve001() {
     int s = 0;
     for (int i = 1; i < 1000; i++) {
@@ -85,6 +100,31 @@ int solve004() {
     return m;
 }
 
+int solve006() {
+    int n1 = 0;
+    int n2 = 0;
+    for (int i = 1; i <= 100; i++) {
+        n1 += i*i;
+        n2 += i;
+    }
+    n2 *= n2;
+    return n2 - n1;
+}
+
+int solve007() {
+    int i = 3;
+    int p = 2;
+    int c = 1;
+    while (c != 10001) {
+        if (is_prime(i)) {
+            p = i;
+            c+=1;
+        }
+        i+=2;
+    }
+    return p;
+}
+
 int main(int argc, char** argv) {
     switch(stoi(argv[1])) {
         case 1:
@@ -98,6 +138,12 @@ int main(int argc, char** argv) {
             break;
         case 4:
             std::cout<<solve004()<<"\n";
+            break;
+        case 6:
+            std::cout<<solve006()<<"\n";
+            break;
+        case 7:
+            std::cout<<solve007()<<"\n";
             break;
         default:
             std::cout<<"NA\n";

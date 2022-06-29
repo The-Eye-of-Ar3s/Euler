@@ -79,7 +79,7 @@ def sorter(x):
 
 def colorizer(text, answer, solution):
     if answer == solution:
-        return f"\33[32m{text} μs\33[0m"
+        return f"\33[35m{text} μs\33[0m"
     elif answer == "NA":
         return f"\33[31mNA\33[0m"
     else:
@@ -101,7 +101,7 @@ def formatter(form, data, solutions):
         for row_num in range(len(table_data)):
             r2 = [i[5:-7] for i in table_data[row_num][2:]]
             ind  = min([int(i) for i in r2 if i != ""])
-            table_data[row_num][r2.index(str(ind))+2] = "\33[1m" + table_data[row_num][r2.index(str(ind))+2]
+            table_data[row_num][r2.index(str(ind))+2] = "\33[32m" + table_data[row_num][r2.index(str(ind))+2][5:]
         print("\n"*2)
         print(tabulate(table_data, headers=headers, tablefmt="psql", numalign="center", stralign="center"))
         print("\n")

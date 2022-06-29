@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 
 int largest_prime_factor(long long int n) {
     int p = 2;
@@ -13,6 +14,21 @@ int largest_prime_factor(long long int n) {
         }
     }
     return n;
+}
+
+bool is_prime(int n) {
+    if (n == 1) {
+        return 0;
+    }
+    
+    int i = 2;
+    while (i*i <= n) {
+        if (n%i == 0) {
+            return 0;
+        }
+        i += 1;
+    }
+    return 1;
 }
 
 int is_palindromic(long num)
@@ -77,6 +93,31 @@ int solve004() {
     return max;
 }
 
+int solve006() {
+    int n1 = 0;
+    int n2 = 0;
+    for (int i = 1; i <= 100; i++) {
+        n1 += i*i;
+        n2 += i;
+    }
+    n2 *= n2;
+    return n2 - n1;
+}
+
+int solve007() {
+    int i = 3;
+    int p = 2;
+    int c = 1;
+    while (c != 10001) {
+        if (is_prime(i)) {
+            p = i;
+            c+=1;
+        }
+        i+=2;
+    }
+    return p;
+}
+
 int main(int argc, char** argv) {
     switch(atoi(argv[1])) {
         case 1:
@@ -90,6 +131,12 @@ int main(int argc, char** argv) {
             break;
         case 4:
             printf("%d\n", solve004());
+            break;
+        case 6:
+            printf("%d\n", solve006());
+            break;
+        case 7:
+            printf("%d\n", solve007());
             break;
         default:
             printf("NA\n");

@@ -17,6 +17,20 @@ function is_palindrome(n) {
     return n.toString() == n.toString().split("").reverse().join("");
 }
 
+function is_prime(n) {
+    if (n == 1) {
+        return false;
+    }
+    let i = 2;
+    while (i*i <= n) {
+        if (n%i == 0) {
+            return false;
+        }
+        i += 1;
+    }
+    return true
+}
+
 function solve001() {
     let s = 0;
     for (let i = 1; i < 1000; i++) {
@@ -63,12 +77,37 @@ function solve004() {
     return m;
 }
 
+function solve006() {
+    let n1 = 0;
+    let n2 = 0;
+    for (let i = 1; i <= 100; i++) {
+        n1 += i*i;
+        n2 += i;
+    }
+    n2 *= n2;
+    return n2 - n1;
+}
+
+function solve007() {
+    let i = 3;
+    let p = [2];
+    while (p.length != 10001) {
+        if (is_prime(i)) {
+            p.push(i);
+        }
+        i += 2;
+    }
+    return p[10000]
+}
+
 function main(arg) {
     map = {
         "1": solve001,
         "2": solve002,
         "3": solve003,
         "4": solve004,
+        "6": solve006,
+        "7": solve007,
     }
 
     if (arg in map) {

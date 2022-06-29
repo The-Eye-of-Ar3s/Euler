@@ -15,6 +15,21 @@ fn prime_factorize(mut n: usize) -> Vec<usize> {
     return r;
 }
 
+fn is_prime(n: usize) -> bool {
+    if n == 1 {
+        return true;
+    }
+
+    let mut i = 3;
+    while i*i <= n {
+        if n%i == 0 {
+            return false
+        }
+        i += 2;
+    }
+    return true;
+}
+
 fn is_palindrome(n: usize) -> bool {
     let f = n.to_string();
     return f == f.chars().rev().collect::<String>();
@@ -63,6 +78,29 @@ fn solve004() -> usize {
     return m;
 }
 
+fn solve006() -> usize {
+    let mut n1 = 0;
+    let mut n2 = 0;
+    for i in 1..101 {
+        n1 += i*i;
+        n2 += i;
+    }
+    n2 *= n2;
+    return n2-n1;
+}
+
+fn solve007() -> usize {
+    let mut i = 3;
+    let mut p = vec![2];
+    while p.len() != 10001 {
+        if is_prime(i) {
+            p.push(i)
+        }
+        i += 2;
+    }
+    return p[10000]
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     let problem = args[1].clone();
@@ -78,6 +116,12 @@ fn main() {
         }
         "4" => {
             println!("{}", solve004());
+        }
+        "6" => {
+            println!("{}", solve006());
+        }
+        "7" => {
+            println!("{:?}", solve007());
         }
         _ => {
             println!("NA");

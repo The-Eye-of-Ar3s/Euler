@@ -27,9 +27,6 @@ def is_palindrome(n):
     i = str(n).strip()
     return i == i[::-1]
 
-def primes_under(n):
-    pass
-
 def solve001():
     return sum([i for i in range(1000) if i % 3 == 0 or i % 5 == 0])
 
@@ -80,7 +77,6 @@ def solve006():
     return sum(range(101))**2 - sum([i**2 for i in range(101)])
 
 def solve007():
-    p = 2
     i = 3
     p = [2]
     while len(p) != 10001:
